@@ -1,0 +1,30 @@
+List<List<sObject>> myListOfList = [FIND 'abc' RETURNING Account(name),Contact(name),Opportunity(name)];
+//List<Account> accList = Account myListOfList;
+//List<Contact> conList = (Contact)myListOfList;
+//List<Opportunity> oppList = (Opportunity)myListOfList;
+system.debug(myListOfList);
+================================================================================================================
+List<Contact> conList = new List<Contact>{
+    new Contact(FirstName = 'Sachin', LastName = 'Gardi',Department = 'Finance'),
+        new Contact(FirstName = 'Sachin',Department = 'Technology')
+        };
+            
+            List<Database.SaveResult> res = Database.insert(conList ,false);
+
+for(Database.SaveResult sr : res){
+    if(sr.isSuccess()){
+        //successfuly inserted contact record in salesforce org
+        system.debug('Successfuly inserted contact. Contact Id:'+ sr.getId());
+    }
+    
+    else{
+        for(Database.Error err : sr.getErrors()){
+            //contact record failed to insert due to error
+            system.debug('The following error has occured!!');
+            system.debug(err.getStatusCode() + ':' + err.getMessage());
+            system.debug('Contact field that affected this error:'+ err.getFields());
+        }
+    }
+}
+
+
