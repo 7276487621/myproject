@@ -1,0 +1,24 @@
+global class LeadUpdateBatch implements Database.Batchable<sObject>{
+	
+	global Database.QueryLocator start(Database.BatchableContext bc){
+	return Database.getQueryLocator([SELECT Rating FROM Lead]);
+	}
+
+
+	global void execute(Database.BatchableContext bc.List<Lead> lList){
+		for(Lead l:lList){
+			l.Rating = 'Hot';
+		}
+		update lList;
+	}
+
+global void finish(Database.BatchableContext bc){
+	Messaging.SingleMessage mail = new Messaging.SingleMessage();
+	String[] toAddress = new String[]{'gardisachin0@gmail.com'};
+	mail.setToAddress(toAddress);
+	mail.setSubject('Batch successfully executed!!');
+	mail.setPlainTextBody('Your batch is successfully executed and completed!!');
+	Messaging.sendEmail(new Messaging.SingleMessage[]{mail});
+	}
+}
+
