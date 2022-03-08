@@ -16,7 +16,6 @@ global void finish(Database.BatchableContext bc){
 	Messaging.SingleMessage mail = new Messaging.SingleMessage();
 	String[] toAddress = new String[]{'gardisachin0@gmail.com'};
 	mail.setToAddress(toAddress);
-jgduhasdvyhdjsvgdjbhvb nhvhhsjcbh gshdhnkbhggfh m  hugjbngjj
 	mail.setSubject('Batch successfully executed!!');
 	mail.setPlainTextBody('Your batch is successfully executed and completed!!');
 	Messaging.sendEmail(new Messaging.SingleMessage[]{mail});
